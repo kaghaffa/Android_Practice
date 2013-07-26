@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ThirtyInSixty/ThirtyInSixty.iml" filepath="$PROJECT_DIR$/ThirtyInSixty/ThirtyInSixty.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ThirtyInSixtyProject.iml" filepath="$PROJECT_DIR$/ThirtyInSixtyProject.iml" />
+    </modules>
+  </component>
+</project>
+
