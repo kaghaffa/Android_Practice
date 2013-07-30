@@ -22,7 +22,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".App_0.App_0"/>
+        <activity android:name="com.example.thirtyinsixty.App_0.App_0" />
+        <activity
+            android:name=".App_1.CrossfitTimerActivity"
+            android:label="@string/title_activity_crossfit_timer" >
+        </activity>
     </application>
 
 </manifest>

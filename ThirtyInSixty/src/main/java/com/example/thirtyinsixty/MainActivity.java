@@ -9,13 +9,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.thirtyinsixty.App_0.App_0;
+import com.example.thirtyinsixty.App_1.CrossfitTimerActivity;
 
 public class MainActivity extends ListActivity {
 
-    private static final String APP_0 = "FragmentMonster";
+    private static final String APP_0 = "Whack-a-Fragment";
+    private static final String APP_1 = "Crossfit Timer";
 
 
-    private String[] apps = { APP_0 };
+    private String[] apps = { APP_0, APP_1 };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +31,15 @@ public class MainActivity extends ListActivity {
     @Override
     public void onListItemClick(ListView parent, View v, int position, long id) {
         String appName = apps[position];
+        Intent in;
 
         switch (position) {
             case 0:
-                Intent in = new Intent(this, App_0.class);
+                in = new Intent(this, App_0.class);
+                startActivity(in);
+                break;
+            case 1:
+                in = new Intent(this, CrossfitTimerActivity.class);
                 startActivity(in);
                 break;
         }
