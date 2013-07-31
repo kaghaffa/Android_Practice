@@ -52,13 +52,7 @@ public class CrossfitTimerFragment extends Fragment implements OnClickListener {
     }
 
     static String getTitle(Context context, int position) {
-        if (position == 0) {
-            return context.getString(R.string.stopwatch_title);
-        } else if (position == 1) {
-            return context.getString(R.string.countdown_title);
-        } else {
-            return context.getString(R.string.tabata_title);
-        }
+        return "Stopwatch";
     }
 
 
