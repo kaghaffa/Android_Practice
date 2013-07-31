@@ -2,6 +2,7 @@ package com.example.thirtyinsixty.App_1;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +18,13 @@ import com.example.thirtyinsixty.R;
  */
 public class CrossfitTimerFragment extends Fragment implements OnClickListener {
 
+    private Handler handler = new Handler();
+
     private static final String KEY_POSITION = "position";
     private Button startStopButton;
     private Button resetButton;
-    private TextView stopwatch;
+    private TextView stopWatchTextView;
+    private StopWatch stopWatch;
 
     static CrossfitTimerFragment newInstance(int position) {
         CrossfitTimerFragment fragment = new CrossfitTimerFragment();
@@ -31,12 +35,15 @@ public class CrossfitTimerFragment extends Fragment implements OnClickListener {
         return fragment;
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View result = inflater.inflate(R.layout.crossfit_timer_fragment, container, false);
         int position = getArguments().getInt(KEY_POSITION, -1);
+        stopWatch = new StopWatch();
 
-        stopwatch = (TextView) result.findViewById(R.id.timer);
+        assert result != null;
+        stopWatchTextView = (TextView) result.findViewById(R.id.timer);
         startStopButton = (Button) result.findViewById(R.id.start_stop_button);
         resetButton = (Button) result.findViewById(R.id.reset_button);
         startStopButton.setOnClickListener(this);
@@ -59,16 +66,28 @@ public class CrossfitTimerFragment extends Fragment implements OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.start_stop_button:
-                if (timerStarted) {
-                    timerStarted = false;
-                    startStopButton.setText("Start");
+                if (stopWatch.isRunning()) {
+                    stopWatch.stop();
+                    startStopButton.setText(R.string.start);
+                    handler.removeCallbacks(updateTime);
                 } else {
-                    timerStarted = true;
-                    startStopButton.setText("Stop");
+                    stopWatch.start();
+                    startStopButton.setText(R.string.stop);
+                    handler.postDelayed(updateTime, 0);
                 }
                 break;
             case R.id.reset_button:
+                stopWatch.reset();
+                stopWatchTextView.setText(stopWatch.getTimeAsString());
                 break;
         }
     }
+
+    private Runnable updateTime = new Runnable() {
+        @Override
+        public void run() {
+            stopWatchTextView.setText(stopWatch.getTimeAsString());
+            handler.postDelayed(this, 0);
+        }
+    };
 }
