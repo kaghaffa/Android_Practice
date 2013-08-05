@@ -30,7 +30,7 @@ public class CrossfitTimerAdapter extends FragmentPagerAdapter {
             case 1:
                 return EmomFragment.newInstance(position);
             case 2:
-                return CrossfitTimerFragment.newInstance(position);
+                return TabataFragment.newInstance(position);
         }
         return null;
     }

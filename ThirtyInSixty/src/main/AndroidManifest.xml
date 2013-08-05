@@ -24,8 +24,12 @@
         </activity>
         <activity android:name="com.example.thirtyinsixty.App_0.App_0" />
         <activity
-            android:name=".App_1.CrossfitTimerActivity"
+            android:name="com.example.thirtyinsixty.App_1.CrossfitTimerActivity"
             android:label="@string/title_activity_crossfit_timer" >
+        </activity>
+        <activity
+            android:name=".App_2.ShakeIt"
+            android:label="@string/title_activity_shake_it" >
         </activity>
     </application>
 

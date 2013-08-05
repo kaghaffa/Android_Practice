@@ -10,14 +10,16 @@ import android.widget.ListView;
 
 import com.example.thirtyinsixty.App_0.App_0;
 import com.example.thirtyinsixty.App_1.CrossfitTimerActivity;
+import com.example.thirtyinsixty.App_2.ShakeIt;
 
 public class MainActivity extends ListActivity {
 
     private static final String APP_0 = "Whack-a-Fragment";
     private static final String APP_1 = "Crossfit Timer";
+    private static final String APP_2 = "Shake It";
 
 
-    private String[] apps = { APP_0, APP_1 };
+    private String[] apps = { APP_0, APP_1, APP_2 };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,10 @@ public class MainActivity extends ListActivity {
                 break;
             case 1:
                 in = new Intent(this, CrossfitTimerActivity.class);
+                startActivity(in);
+                break;
+            case 2:
+                in = new Intent(this, ShakeIt.class);
                 startActivity(in);
                 break;
         }

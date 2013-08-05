@@ -4,18 +4,34 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              >
-
-    <TextView android:id="@+id/timer"
+        >
+    <TextView android:id="@+id/tabata_title"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:text="@string/timer_label"
+              android:textSize="24sp"
+              android:text="@string/tabata_info"
+              android:gravity="center"
+              android:layout_marginTop="50dp"
+            />
+    <TextView android:id="@+id/tabata_work_timer"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="@string/tabata_work_timer"
               android:fontFamily="sans-serif-condensed"
               android:textSize="68sp"
               android:gravity="center"
-              android:layout_marginTop="100dp"
+              android:layout_marginTop="50dp"
               android:layout_gravity="center_vertical"
-              />
+            />
+    <TextView android:id="@+id/tabata_rest_timer"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="@string/tabata_rest_timer"
+              android:fontFamily="sans-serif-thin"
+              android:textSize="68sp"
+              android:gravity="center"
+              android:layout_gravity="center_vertical"
+            />
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:orientation="horizontal"
                   android:layout_width="match_parent"
