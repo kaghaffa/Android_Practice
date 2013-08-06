@@ -45,5 +45,7 @@
     <string name="tabata_work_timer">Work :20</string>
     <string name="tabata_info">8 Rounds - 4 Mins Total</string>
     <string name="title_activity_shake_it">ShakeIt</string>
+    <string name="title_activity_task_list">TaskList</string>
+    <string name="enter_task">Enter task:</string>
 
 </resources>
