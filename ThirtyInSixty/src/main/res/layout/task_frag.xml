@@ -6,13 +6,18 @@
               android:orientation="vertical"
               >
 
-
-
     <EditText android:id="@+id/task_input"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="0dp"
+              android:layout_weight="1"
               android:inputType="textCapSentences|textAutoComplete"
               android:hint="@string/enter_task"
               />
+
+    <Button android:id="@+id/save_task_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_task"
+            />
 
 </LinearLayout>

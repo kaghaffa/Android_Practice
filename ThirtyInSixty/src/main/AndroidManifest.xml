@@ -28,8 +28,13 @@
             android:label="@string/title_activity_crossfit_timer" >
         </activity>
         <activity
-            android:name=".App_2.ShakeIt"
+            android:name="com.example.thirtyinsixty.App_2.ShakeIt"
             android:label="@string/title_activity_shake_it" >
+        </activity>
+        <activity android:name="com.example.thirtyinsixty.App_3.TaskActivity" />
+        <activity
+            android:name=".App_3.TaskList"
+            android:label="@string/title_activity_task_list" >
         </activity>
     </application>
 

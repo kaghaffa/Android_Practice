@@ -125,13 +125,6 @@ public class ShakeIt extends Activity implements SensorEventListener {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.shake_it, menu);
-        return true;
-    }
-
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
@@ -146,7 +139,6 @@ public class ShakeIt extends Activity implements SensorEventListener {
                 sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_NORMAL);
         score.setText("Points " + points);
-        time.setText("Time left: " + timeLeft / 1000);
     }
 
 
