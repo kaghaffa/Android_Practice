@@ -1,5 +1,6 @@
 package com.example.thirtyinsixty.App_3;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,6 +9,7 @@ import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -16,7 +18,7 @@ import java.util.ArrayList;
 public class DatabaseHelper extends SQLiteOpenHelper{
 
     private static final String DATABASE_NAME = "tasks.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
     private static DatabaseHelper singleton = null;
     private Context context;
 
@@ -33,12 +35,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             COLUMN_TASK + " text not null " + ");";
 
 
-    interface TaskListener {
-        void setTask(String task);
-    }
-
     interface TasksListener {
         void setTasks(ArrayList<String> tasks);
+    }
+
+    interface TaskListener {
+        void returnFoundTask(int id);
     }
 
     synchronized static DatabaseHelper getInstance(Context context) {
@@ -78,9 +80,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
 
 
-    void getTaskAsync(int position, TaskListener listener) {
-        AsyncTask<Integer, Void, String> asyncTask = new GetTask(listener);
-        asyncTask.execute(position);
+    void findTaskAsync(TaskListener listener, String task) {
+        AsyncTask<String, Void, Integer> asyncTask = new FindTask(listener);
+        asyncTask.execute(task);
     }
 
 
@@ -94,53 +96,67 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         asyncTask.execute();
     }
 
-    private class GetTask extends AsyncTask<Integer, Void, String> {
+    void deleteTaskAsync(Integer id) {
+        AsyncTask<Integer, Void, Void> asyncTask = new DeleteTask();
+        asyncTask.execute(id);
+    }
+
+
+    private class FindTask extends AsyncTask<String, Void, Integer> {
+
         private TaskListener listener = null;
 
-        GetTask(TaskListener listener) {
+        FindTask(TaskListener listener) {
             this.listener = listener;
         }
 
-
         @Override
-        protected String doInBackground(Integer... params) {
+        protected Integer doInBackground(String... params) {
             String[] args = { params[0].toString() };
-            Cursor c = getReadableDatabase().rawQuery("SELECT task FROM Tasks WHERE position = ?", args);
+            Cursor c = getReadableDatabase().rawQuery("SELECT _ID FROM Tasks WHERE task = ?", args);
 
-            c.moveToFirst();
-            if (c.isAfterLast()) {
-                return null;
+            int result;
+            if (c.getCount() > 0) {
+                c.moveToFirst();
+                result = c.getInt(0);
+                c.close();
+                return result;
             }
 
-            String result = c.getString(0);
             c.close();
-
-            return result;
+            return null;
         }
 
 
         @Override
-        public void onPostExecute(String task) {
-            listener.setTask(task);
+        protected void onPostExecute(Integer id) {
+            listener.returnFoundTask(id);
         }
+
     }
 
 
     private class SaveTask extends AsyncTask<Void, Void, Void> {
-        private int position;
+        private int id;
         private String task;
 
-        SaveTask(int position, String task) {
-            this.position = position;
+        SaveTask(int id, String task) {
+            this.id = id;
             this.task = task;
         }
 
 
         @Override
         public Void doInBackground(Void... params) {
-            String[] args = { String.valueOf(position), task };
 
-            getWritableDatabase().execSQL("INSERT OR REPLACE INTO Tasks (position, task) VALUES (?, ?)", args);
+            if (id < 0) {
+                ContentValues values = new ContentValues();
+                values.put(DatabaseHelper.COLUMN_TASK, task);
+                getWritableDatabase().insert(DatabaseHelper.TABLE_TASKS, null, values);
+            } else {
+                String[] args = { String.valueOf(id), task };
+                getWritableDatabase().execSQL("REPLACE INTO Tasks (_ID, task) VALUES (?, ?)", args);
+            }
 
             return null;
         }
@@ -149,7 +165,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     private class GetAllTasks extends AsyncTask<Void, Void, ArrayList<String>> {
 
-        private ArrayList<String> tasks = new ArrayList<String>();
         private TasksListener listener = null;
 
         GetAllTasks(TasksListener listener) {
@@ -164,6 +179,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             c.moveToFirst();
             while (!c.isAfterLast()) {
                 tasks.add(c.getString(1));
+                c.moveToNext();
             }
 
             c.close();
@@ -176,6 +192,22 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         public void onPostExecute(ArrayList<String> tasks) {
             listener.setTasks(tasks);
         }
+
+    }
+
+
+    private class DeleteTask extends AsyncTask<Integer, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Integer... params) {
+            String[] args = { params[0].toString() };
+
+            getWritableDatabase().delete(DatabaseHelper.TABLE_TASKS, DatabaseHelper.COLUMN_ID + "=" + params[0], null);
+
+            return null;
+        }
+
+
 
     }
 }

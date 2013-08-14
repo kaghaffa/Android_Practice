@@ -16,14 +16,15 @@ import com.example.thirtyinsixty.R;
 public class TaskActivity extends FragmentActivity{
 
     public static final String EXTRA_POSITION = "position";
+    private static final String SELECTED_TASK = "selectedTask";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (getSupportFragmentManager().findFragmentById(android.R.id.content) == null) {
-            int position = getIntent().getIntExtra(EXTRA_POSITION, -1);
-            Fragment f = TaskFragment.getInstance(position);
+            String task = getIntent().getStringExtra(SELECTED_TASK);
+            Fragment f = TaskFragment.getInstance(task);
             getSupportFragmentManager().beginTransaction()
                                        .add(android.R.id.content, f).commit();
 

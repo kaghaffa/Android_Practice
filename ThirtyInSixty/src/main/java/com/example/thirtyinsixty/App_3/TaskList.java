@@ -20,8 +20,9 @@ public class TaskList extends Activity implements DatabaseHelper.TasksListener {
     private ListView taskList;
     private ArrayAdapter arrayAdapter;
     private DatabaseHelper dbHelper;
+    private static final String SELECTED_TASK = "selectedTask";
+
     private ArrayList<String> tasks;
-    private String[] testTasks = { "hello", "world" };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class TaskList extends Activity implements DatabaseHelper.TasksListener {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
                 Intent in = new Intent(TaskList.this, TaskActivity.class);
-                in.putExtra("selectedTask", tasks.get(position));
+                in.putExtra(SELECTED_TASK, tasks.get(position));
                 startActivity(in);
             }
         });
@@ -55,7 +56,6 @@ public class TaskList extends Activity implements DatabaseHelper.TasksListener {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         if (item.getItemId() == R.id.add_task) {
             Intent in = new Intent(this, TaskActivity.class);
             startActivity(in);
@@ -69,9 +69,6 @@ public class TaskList extends Activity implements DatabaseHelper.TasksListener {
         if (tasks.size() > 0) {
             this.tasks = tasks;
             arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, tasks);
-            taskList.setAdapter(arrayAdapter);
-        } else {
-            arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, testTasks);
             taskList.setAdapter(arrayAdapter);
         }
     }
