@@ -52,5 +52,8 @@
     <string name="add_task">Add Task</string>
     <string name="delete">Delete</string>
     <string name="title_activity_parse_task_list">ParseTaskList</string>
+    <string name="title_activity_notify_yourself">NotifyYourself</string>
+    <string name="notify_yourself">HI GRACE</string>
+    <string name="notify_yourself_text">You just got notified!</string>
 
 </resources>
