@@ -12,6 +12,7 @@ import com.example.thirtyinsixty.App_0.App_0;
 import com.example.thirtyinsixty.App_1.CrossfitTimerActivity;
 import com.example.thirtyinsixty.App_2.ShakeIt;
 import com.example.thirtyinsixty.App_3.TaskList;
+import com.example.thirtyinsixty.App_4.ParseTaskList;
 
 public class MainActivity extends ListActivity {
 
@@ -19,9 +20,10 @@ public class MainActivity extends ListActivity {
     private static final String APP_1 = "Crossfit Timer";
     private static final String APP_2 = "Shake It";
     private static final String APP_3 = "Task List";
+    private static final String APP_4 = "Task List + Parse";
 
 
-    private String[] apps = { APP_0, APP_1, APP_2, APP_3 };
+    private String[] apps = { APP_0, APP_1, APP_2, APP_3, APP_4 };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,10 @@ public class MainActivity extends ListActivity {
                 break;
             case 3:
                 in = new Intent(this, TaskList.class);
+                startActivity(in);
+                break;
+            case 4:
+                in = new Intent(this, ParseTaskList.class);
                 startActivity(in);
                 break;
         }
